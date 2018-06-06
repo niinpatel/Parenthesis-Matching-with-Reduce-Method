@@ -1,4 +1,4 @@
-#Parenthesis-Matching-with-Reduce-Method
+# Parenthesis-Matching-with-Reduce-Method
 
 In this program we use javascript's *reduce* method to check if a given expression's parenthesis are balanced or not. 
 
@@ -35,3 +35,43 @@ With this logic, if the parenthesis match perfectly, we should get an empty arra
 If the parenthesis are not matched or in incorrect order, we will get a non-empty array. 
 
 So we will *return reducedArray.length === 0*
+
+
+# ** Update - June 6 2018 **
+
+The above method is surely not the best way to do this because we are essentially storing every element into stacks. 
+
+I have created a new program *withoutStacks.js* which does the same job in much better way without storing elements of the array. 
+
+Let's look at the code. 
+
+    function isMatched(expression) {
+        return expression.split('').reduce((accumulator, currentValue) => {
+            if(currentValue === "(")
+                return ++accumulator
+            else if (currentValue === ")")
+                return --accumulator
+            return accumulator
+        }, 0) === 0
+    }
+
+
+Here instead of having a stack, we're having an accumulator as a number, initially value of which is one. 
+
+If we encounter an opening parenthesis, we will increment it, and if we encounter a closing parenthesis, we will decrement it. 
+
+This way, the final result will be zero is the expression is balanced. 
+
+To convert this output into boolean, we will put *=== 0* in the end. 
+
+An alternative syntax, a more succinct way to write this program would be 
+
+    /* Alternate Syntax */
+    function isMatched2(expression) {
+    
+        return [...expression].reduce((accumulator, currentValue) => {
+            return currentValue === "(" && ++accumulator || currentValue === ")" && --accumulator
+        }, 0) === 0
+    
+    }
+
